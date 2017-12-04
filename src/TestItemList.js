@@ -5,7 +5,7 @@ import './TestItemList.css';
 const itemPropType = {
 	name : PropTypes.string.isRequired,
 	description : PropTypes.string.isRequired,
-	test : PropTypes.object.isRequired,
+	test : PropTypes.func.isRequired,
 };
 
 class TestItemRow extends PureComponent {
@@ -21,19 +21,22 @@ class TestItemRow extends PureComponent {
 	}
 
 	async componentDidMount() {
-		try {
-			const result = await this.props.test;
-			console.log(`${this.props.name}: ${result}`);
-			this.setState({result, isDone : true});
-		} catch (e) {
-			console.warn(e);
-			this.setState({result: false, isDone: true});
+		// Pick a delay between 200 and 1500ms
+		const randomDelay = (Math.floor(Math.random() * 1300) + 200);
+		const result = await new Promise(resolve => setTimeout(() => resolve(this.props.test()), randomDelay));
+
+		if (!result.success) {
+			console.warn(this.props.name, result);
+		} else {
+			console.log(this.props.name, result);
 		}
+
+		this.setState({result : result.success, isDone : true});
 	}
 
 	_renderResult() {
 		if (!this.state.isDone) {
-			return 'In progress';
+			return <span className="inProgress">In progress</span>;
 		}
 		return this.state.result ? <span className="pass">Pass</span> : <span className="fail">Failure</span>;
 	}
@@ -58,7 +61,7 @@ class TestItemList extends PureComponent {
 		return <table width="100%">
 			<thead>
 			<tr>
-				<th width={150}>Test</th>
+				<th width={130}>Test</th>
 				<th>Description</th>
 				<th width={100}>Status</th>
 			</tr>

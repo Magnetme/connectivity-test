@@ -6,3 +6,11 @@
 	color: red;
 	font-weight: bold;
 }
+
+.inProgress {
+	font-style: italic;
+}
+
+tr {
+	line-height: 24px;
+}
