@@ -26,3 +26,11 @@ Generally its not our problem, and a recruiter can easily send this to any ITer 
 Example gif of the system running in a browser (might be outdated):
  
 ![Example gif](https://s3-eu-west-1.amazonaws.com/uploads-eu.hipchat.com/65597/687838/FJSo93ECw0kwmHk/2017-12-04%2023.40.49.gif)
+
+## Tech things
+
+1. Let the test always run under HTTP, otherwise a browser will probably refuse the HTTP tests (insecure content)
+1. Hosted by AWS Cloudfront
+1. Build by Jenkins
+1. The tests initiate with a small and randomized delay. Otherwise them complete that quickly that is look like it's not real #firstFeedback.
+1. Obviously in React.
