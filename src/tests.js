@@ -92,8 +92,10 @@ function testOf(name, description, test) {
 
 const tests = [
 	testOf('DNS', 'Can your computer translate Magnet.me?', performNetworkRequest('http://magnet.me', 'no-cors')),
-	testOf('IPv4', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
-	testOf('IPv6', 'Does connecting over ipv6 work?', performNetworkRequest('http://clients-6.magnet.me')),
+	testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
+	testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
+	testOf('IPv6 / HTTP', 'Does connecting over ipv6 work?', performNetworkRequest('http://clients-6.magnet.me')),
+	testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work?', performNetworkRequest('https://clients-6.magnet.me')),
 	testOf('HTTP', 'Can you communicate over HTTP', loadAsScript(`http://${window.location.host}/demo.js`)),
 	testOf('HTTPS', 'Can you communicate over HTTPS', loadAsScript(`https://${window.location.host}/demo.js`)),
 	testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
