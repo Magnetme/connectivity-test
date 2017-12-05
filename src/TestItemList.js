@@ -22,6 +22,7 @@ class TestItemRow extends PureComponent {
 
 	async componentDidMount() {
 		// Pick a delay between 250 and 2000ms
+		// Otherwise the tests are being done too quickly and people think nothing really happened...
 		const randomDelay = (Math.floor(Math.random() * 1750) + 250);
 		const result = await new Promise(resolve => setTimeout(() => resolve(this.props.test()), randomDelay));
 
