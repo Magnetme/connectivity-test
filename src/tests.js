@@ -89,12 +89,16 @@ const tests = [
 
 	testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
 	testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
+
 	// TODO the test below is not working
 	// testOf('Proxy image', 'Can you reach our proxy imaging subsystem?', loadAsIframe(`https://camo.magnet.me/status`)),
+
 	testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/markdown/autolinker`)),
 	testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
+
 	// TODO the test below is not working
 	// testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`)),
+
 	testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
 	testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
 	testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
