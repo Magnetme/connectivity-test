@@ -19,6 +19,12 @@ class App extends PureComponent {
 				</p>
 
 				<TestItemList tests={tests}/>
+
+				<p>
+					<sup>*</sup>
+					In case the your network does not support IPv6 the IPv6 tests can fail.
+					This does not indicate a problem as long as the IPv4 tests succeed.
+				</p>
 			</div>
 		);
 	}

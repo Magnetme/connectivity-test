@@ -78,8 +78,10 @@ const tests = [
 
 	testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
 	testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
-	testOf('IPv6 / HTTP', 'Does connecting over ipv6 work?', performNetworkRequest('http://clients-6.magnet.me')),
-	testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work?', performNetworkRequest('https://clients-6.magnet.me')),
+
+	// These are allowed to fail if the client network does not support ipv6
+	testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
+	testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
 
 	// The two tests below only work in production
 	testOf('HTTP', 'Can you communicate over HTTP', loadAsScript(`http://${window.location.host}/demo.js`)),
