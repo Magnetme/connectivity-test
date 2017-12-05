@@ -71,9 +71,9 @@ function testOf(name, description, test) {
 }
 
 const tests = [
-	testOf('Ping', 'Can your contact Magnet.me at all?', pingTest('http://magnet.me')),
-	testOf('Ping LB', 'Can your contact our datacenter?', pingTest('http://lb.magnet.me')),
-	testOf('Ping CDN', 'Can your contact our CDN?', pingTest('http://cdn.magnet.me')),
+	testOf('Ping', 'Can you contact Magnet.me at all?', pingTest('http://magnet.me')),
+	testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://lb.magnet.me')),
+	testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
 	// No pings for Oauth, since it adoes not allow remote checks for security reasons
 
 	testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
