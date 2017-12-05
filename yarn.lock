@@ -6316,6 +6316,10 @@ wbuf@^1.1.0, wbuf@^1.7.2:
   dependencies:
     minimalistic-assert "^1.0.0"
 
+"web-pingjs@https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871":
+  version "1.0.0"
+  resolved "https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871"
+
 webidl-conversions@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"

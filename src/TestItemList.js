@@ -21,8 +21,8 @@ class TestItemRow extends PureComponent {
 	}
 
 	async componentDidMount() {
-		// Pick a delay between 200 and 1500ms
-		const randomDelay = (Math.floor(Math.random() * 1300) + 200);
+		// Pick a delay between 250 and 2000ms
+		const randomDelay = (Math.floor(Math.random() * 1750) + 250);
 		const result = await new Promise(resolve => setTimeout(() => resolve(this.props.test()), randomDelay));
 
 		if (!result.success) {
@@ -38,7 +38,7 @@ class TestItemRow extends PureComponent {
 		if (!this.state.isDone) {
 			return <span className="inProgress">In progress</span>;
 		}
-		return this.state.result ? <span className="pass">Pass</span> : <span className="fail">Failure</span>;
+		return this.state.result ? <span className="pass">Passed</span> : <span className="fail">Failed</span>;
 	}
 
 	render() {
@@ -61,7 +61,7 @@ class TestItemList extends PureComponent {
 		return <table width="100%">
 			<thead>
 			<tr>
-				<th width={130}>Test</th>
+				<th width={160}>Test</th>
 				<th>Description</th>
 				<th width={100}>Status</th>
 			</tr>

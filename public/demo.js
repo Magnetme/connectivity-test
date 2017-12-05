@@ -1,3 +1,3 @@
 var example = {
-	whut: 'this is some example content'
+	whut : 'this is some example content'
 };
