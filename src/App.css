@@ -2,5 +2,17 @@
 	text-align: left;
 	max-width: 640px;
 	margin: 20px;
-	font-family: 'Source Sans Pro';
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.browser {
+	font-family: monospace, sans-serif;
+	background-color: #eff0f1;
+	display: block;
+	white-space: pre-wrap;
+}
+
+.line {
+	width: 100%;
+	border-bottom: 1px solid black;
 }
