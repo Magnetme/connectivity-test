@@ -5,7 +5,7 @@ import Header from './Header';
 import TestItemList from "./TestItemList";
 import tests from './tests';
 
-const Line = <p className="line"/>
+const Line = <p className="line"/>;
 
 class App extends PureComponent {
 	render() {
