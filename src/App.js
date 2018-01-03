@@ -1,13 +1,14 @@
 import React, {PureComponent} from 'react';
-import platform from 'platform';
 import './App.css';
 import Header from './Header';
 import TestItemList from "./TestItemList";
 import tests from './tests';
+import Environment from "./Environment";
 
 const Line = <p className="line"/>;
 
 class App extends PureComponent {
+
 	render() {
 		return (
 			<div className="App">
@@ -18,11 +19,13 @@ class App extends PureComponent {
 				</p>
 				<p>
 					The test consists of two separate parts.
-					<ol>
-						<li>The first part will automatically persorm several connectivity checks.</li>
-						<li>The second part includes information about the system you are using (no personal information will be included).</li>
-					</ol>
 				</p>
+				<ol>
+					<li>The first part will automatically persorm several connectivity checks.</li>
+					<li>The second part includes information about the system you are using (no personal information will be
+						included).
+					</li>
+				</ol>
 
 				{Line}
 
@@ -46,7 +49,7 @@ class App extends PureComponent {
 					Please copy/paste the text below in your email to your account manager or supporter.
 				</p>
 
-				<pre className="browser"><code>{JSON.stringify(platform, null, 4)}</code></pre>
+				<Environment/>
 			</div>
 		);
 	}

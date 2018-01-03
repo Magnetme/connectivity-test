@@ -1,0 +1,6 @@
+.environment {
+	font-family: monospace, sans-serif;
+	background-color: #eff0f1;
+	display: block;
+	white-space: pre-wrap;
+}
