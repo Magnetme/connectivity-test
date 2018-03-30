@@ -1,5 +1,5 @@
 import ping from 'web-pingjs';
-import {loadAsScript, loadAsStyleSheet} from "./loaders";
+import {loadAsImage, loadAsScript, loadAsStyleSheet} from "./loaders";
 
 function dummyTest() {
 	const randomSecondDelay = Math.floor(Math.random() * 10) + 1;
@@ -104,6 +104,20 @@ const tests = [
 	testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
 	testOf('Intercom', 'Can you reach Intercom?', loadAsScript('https://widget.intercom.io/widget/jvjwxo89')),
 	testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
+
+	// This checks whether Social stuff might be blocked
+	testOf('Facebook', 'Can you contact Facebook.com at all?', pingTest('https://facebook.com')),
+	testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://www.linkedin.com')),
+	testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://twitter.com')),
+
+	// More internal test of social networks
+	testOf('Facebook CSS', 'Can you reach Facebook Network?', performNetworkRequest('https://facebook.com/security/hsts-pixel.gif')),
+	testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
+	testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
+
+	// Test sites in our data centre
+	testOf('DCGA1', 'Can you reach our primary data centre?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
+	testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://shop.inventid.nl/assets/logo_without_name-5237986b43fe8729877c205ea88fe0f1043c0b69ea03383cde12c86f664afd43.png')),
 ];
 
 export default tests;

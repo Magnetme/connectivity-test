@@ -52,3 +52,12 @@ export function loadAsStyleSheet(uri) {
 		e.rel = 'stylesheet';
 	});
 }
+
+export function loadAsImage(uri) {
+	return loadAsElement('img', window.document.body, (e) => {
+		e.src = uri;
+		e.width = 1;
+		e.height = 1;
+		e.style.display = 'none';
+	});
+}
