@@ -108,11 +108,10 @@ const tests = [
 	// This checks whether Social stuff might be blocked
 	testOf('Facebook', 'Can you contact Facebook.com at all?', pingTest('https://facebook.com')),
 	testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://www.linkedin.com')),
-	testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://twitter.com')),
+	testOf('Twitter', 'Can you contact Twitter.com at all?', pingTest('https://twitter.com')),
 
 	// More internal test of social networks
 	testOf('Facebook CSS', 'Can you reach Facebook Network?', performNetworkRequest('https://facebook.com/security/hsts-pixel.gif')),
-	testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
 	testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
 
 	// Test sites in our data centre
