@@ -8,6 +8,9 @@ const itemPropType = {
 	test : PropTypes.func.isRequired,
 };
 
+const PASSED = <span className="pass">Passed</span>;
+const FAILED = <span className="fail">Failed</span>;
+
 class TestItemRow extends PureComponent {
 
 	static propTypes = itemPropType;
@@ -39,7 +42,7 @@ class TestItemRow extends PureComponent {
 		if (!this.state.isDone) {
 			return <span className="inProgress">In progress</span>;
 		}
-		return this.state.result ? <span className="pass">Passed</span> : <span className="fail">Failed</span>;
+		return this.state.result ? PASSED : FAILED;
 	}
 
 	render() {
@@ -68,6 +71,11 @@ class TestItemList extends PureComponent {
 			</tr>
 			</thead>
 			<thead>
+			<tr>
+				<td>Executed at</td>
+				<td>{new Date().toISOString()}</td>
+				<td>{PASSED}</td>
+			</tr>
 			{this.props.tests.map((e, i) => <TestItemRow key={i} {...e} />)}
 			</thead>
 
