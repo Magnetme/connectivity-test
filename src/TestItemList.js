@@ -72,7 +72,7 @@ class TestItemList extends PureComponent {
 
 	componentDidMount() {
 		// Slow this down for UX
-		setTimeout(() => this.detectAdBlocker(), 720);
+		setTimeout(() => this.detectAdBlocker(), 920);
 	}
 
 	detectAdBlocker() {
