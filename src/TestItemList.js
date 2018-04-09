@@ -8,6 +8,7 @@ const itemPropType = {
 	test : PropTypes.func.isRequired,
 };
 
+const IN_PROGRESS = <span className="inProgress">In progress</span>;
 const PASSED = <span className="pass">Passed</span>;
 const FAILED = <span className="fail">Failed</span>;
 
@@ -40,7 +41,7 @@ class TestItemRow extends PureComponent {
 
 	_renderResult() {
 		if (!this.state.isDone) {
-			return <span className="inProgress">In progress</span>;
+			return IN_PROGRESS;
 		}
 		return this.state.result ? PASSED : FAILED;
 	}
@@ -57,9 +58,66 @@ class TestItemRow extends PureComponent {
 
 class TestItemList extends PureComponent {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			adBlockDetected: null
+		};
+		this.detectAdBlocker = this.detectAdBlocker.bind(this);
+	}
+
 	static propTypes = {
 		tests : PropTypes.arrayOf(PropTypes.shape(itemPropType)),
 	};
+
+	componentDidMount() {
+		// Slow this down for UX
+		setTimeout(() => this.detectAdBlocker(), 720);
+	}
+
+	detectAdBlocker() {
+		const head = document.getElementsByTagName('head')[0];
+
+		const noAdBlockDetected = () => {
+			this.setState({
+				adBlockDetected: false
+			});
+		};
+
+		const adBlockDetected = () => {
+			this.setState({
+				adBlockDetected: true
+			});
+		};
+
+		// clean up stale bait
+		const oldScript =
+			document.getElementById('adblock-detection');
+		if (oldScript) {
+			head.removeChild(oldScript);
+		}
+
+		// Build the bait
+		const script = document.createElement('script');
+		script.id = 'adblock-detection';
+		script.type = 'application/javascript';
+		script.src = '/ads/analytics/tracking.js';
+		script.onload = noAdBlockDetected;
+		script.onerror = adBlockDetected;
+		head.appendChild(script);
+	}
+
+	adBlockView() {
+		switch(this.state.adBlockDetected) {
+			case true:
+				return FAILED;
+			case false:
+				return PASSED;
+			case null:
+			default:
+				return IN_PROGRESS;
+		}
+	}
 
 	render() {
 		return <table width="100%">
@@ -75,6 +133,11 @@ class TestItemList extends PureComponent {
 				<td>Executed at</td>
 				<td>{new Date().toISOString()}</td>
 				<td>{PASSED}</td>
+			</tr>
+			<tr>
+				<td>Ad blocker</td>
+				<td>Is any adblocker active?</td>
+				<td>{this.adBlockView()}</td>
 			</tr>
 			{this.props.tests.map((e, i) => <TestItemRow key={i} {...e} />)}
 			</thead>
