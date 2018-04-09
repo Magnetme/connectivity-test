@@ -27,7 +27,7 @@ class Environment extends PureComponent {
 	}
 
 	async componentDidMount() {
-		const result = await fetch('http://freegeoip.net/json/');
+		const result = await fetch('http://api.ipstack.com/check?hostname=1&access_key=c7de533b6bb95365e6f4efc3779e17de');
 		const json = await result.json();
 		console.log('New IP data received');
 		this.setState({ip : json});
