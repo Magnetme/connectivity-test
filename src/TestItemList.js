@@ -61,7 +61,7 @@ class TestItemList extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			adBlockDetected: null
+			adBlockDetected : null
 		};
 		this.detectAdBlocker = this.detectAdBlocker.bind(this);
 	}
@@ -80,13 +80,13 @@ class TestItemList extends PureComponent {
 
 		const noAdBlockDetected = () => {
 			this.setState({
-				adBlockDetected: false
+				adBlockDetected : false
 			});
 		};
 
 		const adBlockDetected = () => {
 			this.setState({
-				adBlockDetected: true
+				adBlockDetected : true
 			});
 		};
 
@@ -105,10 +105,18 @@ class TestItemList extends PureComponent {
 		script.onload = noAdBlockDetected;
 		script.onerror = adBlockDetected;
 		head.appendChild(script);
+
+		setTimeout(() => {
+			if (this.state.adBlockDetected === null) {
+				// Still not resolved apparently, so probably an adblocker prevented the callbacks from firing
+				console.log('Ad blocking test script callbacks did not fire, marking ad block as active');
+				this.setState({adBlockDetected : true});
+			}
+		}, 5000)
 	}
 
 	adBlockView() {
-		switch(this.state.adBlockDetected) {
+		switch (this.state.adBlockDetected) {
 			case true:
 				return FAILED;
 			case false:
