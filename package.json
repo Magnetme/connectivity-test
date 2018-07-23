@@ -5,10 +5,10 @@
   "dependencies": {
     "core-js": "^2.5.3",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
+    "react": "^16.4.1",
     "react-device": "^0.8.1",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4",
     "web-pingjs": "https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871"
   },
   "scripts": {
