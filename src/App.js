@@ -21,7 +21,7 @@ class App extends PureComponent {
 					The test consists of two separate parts.
 				</p>
 				<ol>
-					<li>The first part will automatically persorm several connectivity checks.</li>
+					<li>The first part will automatically perform several connectivity checks.</li>
 					<li>The second part includes information about the system you are using (no personal information will be
 						included).
 					</li>
