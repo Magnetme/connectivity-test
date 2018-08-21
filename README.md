@@ -14,14 +14,17 @@ All domains also work under HTTPS, but primarily __test under HTTP__!
 
 Sometimes people notify us of connectivity problems.
 This system can remotely be run to quickly determine where these problems lie.
-Generally its not our problem, and a recruiter can easily send this to any ITer to actually fix a problem
+Generally it's not on the Magnet.me end, but it can be difficult to show this.
+This test provides a quick and visual result to show to other parties where the problem may lie.
 
 ## How
 
-1. Send a recruiter who reports any problem one of the above links
-1. Let them share the results
-1. Indicate this is clearly their problem
-1. Offer to let one of our IT guys to help (if high end client only!)
+1. Send a recruiter who reports any problem one of the above links (in case of a domain block, use the magnetme.com domain).
+1. Let them share the results back with us.
+1. Our IT can then infer where the problem approximately lies.
+    1. If this is on our end, escalate it to get it fixed asap.
+    1. If it is on the remote end, provide information back to the client, which they may in turn escalate to their IT department.
+1. Offer to let one of our IT guys to help with a call, if required.
 
 Example gif of the system running in a browser (might be outdated):
  
@@ -30,7 +33,8 @@ Example gif of the system running in a browser (might be outdated):
 ## Tech things
 
 1. Let the test always run under HTTP, otherwise a browser will probably refuse the HTTP tests (insecure content)
-1. Hosted by AWS Cloudfront
-1. Build by Jenkins
+1. Hosted by AWS Cloudfront in production
+1. Build by Jenkins and auto-pushed
 1. The tests initiate with a small and randomized delay. Otherwise them complete that quickly that is look like it's not real #firstFeedback.
 1. Obviously in React.
+1. Also logs some stuff about the environment, as sometimes the problem may reside there (and not in the network path).
