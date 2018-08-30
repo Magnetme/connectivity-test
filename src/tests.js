@@ -71,6 +71,50 @@ async function checkHttp2() {
 	}
 }
 
+function websockets(secure = false) {
+	const message = `Magnet.me websocket test ${Math.random()}`;
+	return async () => new Promise(((resolve, reject) => {
+		const failed = () => reject({
+			success : false,
+		});
+		const timeout = setTimeout(() => {
+			console.warn('WSS took too long');
+			failed();
+		}, 5000);
+
+		try {
+			const websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.org/`);
+			let start;
+			websocket.onopen = () => {
+				start = new Date();
+				websocket.send(message);
+			};
+
+			websocket.onmessage = (evt) => {
+				const responseData = evt.data;
+				if (responseData === message) {
+					clearTimeout(timeout);
+					resolve({
+						success : true,
+						response : new Date() - start,
+					});
+				} else {
+					console.log(`Response data was '${responseData}', expected '${message}'.`);
+					failed();
+				}
+			};
+			websocket.onerror = () => {
+				clearTimeout(timeout);
+				failed();
+			}
+		} catch (e) {
+			console.warn(e);
+			clearTimeout(timeout);
+			failed();
+		}
+	}));
+}
+
 function testOf(name, description, test) {
 	return {
 		name,
@@ -98,8 +142,10 @@ const tests = [
 	testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
 
 	// The two tests below only work in production
-	testOf('HTTP', 'Can you communicate over HTTP', loadAsScript(`http://${window.location.host}/demo.js`)),
-	testOf('HTTPS', 'Can you communicate over HTTPS', loadAsScript(`https://${window.location.host}/demo.js`)),
+	testOf('HTTP', 'Can you communicate over HTTP?', loadAsScript(`http://${window.location.host}/demo.js`)),
+	testOf('HTTPS', 'Can you communicate over HTTPS?', loadAsScript(`https://${window.location.host}/demo.js`)),
+	testOf('Websockets', 'Can you communicate over websockets? **', websockets()),
+	testOf('Secure websockets', 'Can you communicate over secure websockets?', websockets(true)),
 
 	testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
 	testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),

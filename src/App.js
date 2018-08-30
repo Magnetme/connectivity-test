@@ -41,6 +41,11 @@ class App extends PureComponent {
 					In case the your network does not support IPv6 the IPv6 tests can fail.
 					This does not indicate a problem as long as the IPv4 tests succeed.
 				</p>
+				<p>
+					<sup>**</sup>
+					Communication over non-encrypted websockets is not always possible. This test is allowed to fail as
+					long as the secure websockets test succeeds.
+				</p>
 
 				{Line}
 
