@@ -7,6 +7,10 @@ const itemPropType = {
 	description : PropTypes.string.isRequired,
 	test : PropTypes.func.isRequired,
 };
+const marginStyle = {
+	height : 6,
+	borderTop : '1px solid #DBDBDB',
+};
 
 const IN_PROGRESS = <span className="inProgress">In progress</span>;
 const PASSED = <span className="pass">Passed</span>;
@@ -25,6 +29,11 @@ class TestItemRow extends PureComponent {
 	}
 
 	async componentDidMount() {
+		if (this.isMarginOnly()) {
+			// No need to execute tests for these
+			return;
+		}
+
 		// Pick a delay between 250 and 2000ms
 		// Otherwise the tests are being done too quickly and people think nothing really happened...
 		const randomDelay = (Math.floor(Math.random() * 1750) + 250);
@@ -39,6 +48,10 @@ class TestItemRow extends PureComponent {
 		this.setState({result : result.success, isDone : true});
 	}
 
+	isMarginOnly() {
+		return Object.keys(this.props).length === 0;
+	}
+
 	_renderResult() {
 		if (!this.state.isDone) {
 			return IN_PROGRESS;
@@ -47,6 +60,11 @@ class TestItemRow extends PureComponent {
 	}
 
 	render() {
+		if (this.isMarginOnly()) {
+			return <tr style={marginStyle}>
+				<td colspan="3" style={marginStyle}>{` `}</td>
+			</tr>
+		}
 
 		return <tr>
 			<td>{this.props.name}</td>

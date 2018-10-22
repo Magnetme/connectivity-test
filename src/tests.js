@@ -123,60 +123,83 @@ function testOf(name, description, test) {
 	}
 }
 
+function margin() {
+	return {};
+}
+
 const tests = [
-	testOf('Ping', 'Can you contact Magnet.me at all (domain)?', pingTest('http://magnet.me')),
-	testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://lb.magnet.me')),
-	testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
-	testOf('Ping OAuth', 'Can you contact our authentication layer?', performNetworkRequest('https://oauth.magnet.me', 'no-cors')),
-	// No pings for Oauth, since it adoes not allow remote checks for security reasons
+		margin(),
 
-	testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://149.210.175.129', 'no-cors')),
+		testOf('Ping', 'Can you contact Magnet.me at all (domain)?', pingTest('http://magnet.me')),
+		testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://lb.magnet.me')),
+		testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
+		testOf('Ping OAuth', 'Can you contact our authentication layer?', performNetworkRequest('https://oauth.magnet.me', 'no-cors')),
+		// No pings for Oauth, since it adoes not allow remote checks for security reasons
+		margin(),
 
-	testOf('IPv4 Ping', 'Can you contact Magnet.me at all over IPv4?', pingTest('http://149.210.175.129')),
-	testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
-	testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
+		testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://149.210.175.129', 'no-cors')),
+		margin(),
 
-	// These are allowed to fail if the client network does not support ipv6
-	testOf('IPv6 Ping', 'Can you contact Magnet.me at all over IPv6?', pingTest('http://2a01:7c8:aab5:69::1')),
-	testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
-	testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
+		testOf('IPv4 Ping', 'Can you contact Magnet.me at all over IPv4?', pingTest('http://149.210.175.129')),
+		testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
+		testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
+		margin(),
 
-	// The two tests below only work in production
-	testOf('HTTP', 'Can you communicate over HTTP?', loadAsScript(`http://${window.location.host}/demo.js`)),
-	testOf('HTTPS', 'Can you communicate over HTTPS?', loadAsScript(`https://${window.location.host}/demo.js`)),
-	testOf('Websockets', 'Can you communicate over websockets? **', websockets()),
-	testOf('Secure websockets', 'Can you communicate over secure websockets?', websockets(true)),
+		// These are allowed to fail if the client network does not support ipv6
+		testOf('IPv6 Ping', 'Can you contact Magnet.me at all over IPv6?', pingTest('http://2a01:7c8:aab5:69::1')),
+		testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
+		testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
+		margin(),
 
-	testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
-	testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
+		// The two tests below only work in production
+		testOf('HTTP', 'Can you communicate over HTTP?', loadAsScript(`http://${window.location.host}/demo.js`)),
+		testOf('HTTPS', 'Can you communicate over HTTPS?', loadAsScript(`https://${window.location.host}/demo.js`)),
+		testOf('Websockets', 'Can you communicate over websockets? **', websockets()),
+		testOf('Secure websockets', 'Can you communicate over secure websockets?', websockets(true)),
+		margin(),
 
-	// TODO the test below is not working
-	// testOf('Proxy image', 'Can you reach our proxy imaging subsystem?', loadAsIframe(`https://camo.magnet.me/status`)),
+		testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
+		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
+		margin(),
 
-	testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/markdown/autolinker`)),
-	testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
+		// TODO the test below is not working
+		// testOf('Proxy image', 'Can you reach our proxy imaging subsystem?', loadAsIframe(`https://camo.magnet.me/status`)),
+		// margin(),
 
-	// TODO the test below is not working
-	// testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`)),
+		testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/markdown/autolinker`)),
+		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
+		// margin(),
 
-	testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
-	testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
-	testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
-	testOf('Intercom', 'Can you reach Intercom?', loadAsScript('https://widget.intercom.io/widget/jvjwxo89')),
-	testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
+		// TODO the test below is not working
+		// testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`)),
 
-	// This checks whether Social stuff might be blocked
-	testOf('Facebook', 'Can you contact Facebook.com at all?', pingTest('https://facebook.com')),
-	testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://www.linkedin.com')),
-	testOf('Twitter', 'Can you contact Twitter.com at all?', pingTest('https://twitter.com')),
+		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
+		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
+		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
+		testOf('Intercom', 'Can you reach Intercom?', loadAsScript('https://widget.intercom.io/widget/jvjwxo89')),
+		testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
+		margin(),
 
-	// More internal test of social networks
-	testOf('Facebook CSS', 'Can you reach Facebook Network?', performNetworkRequest('https://facebook.com/security/hsts-pixel.gif')),
-	testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
+		// This checks whether Social stuff might be blocked
+		testOf('Facebook', 'Can you contact Facebook.com at all?', pingTest('https://facebook.com')),
+		testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://www.linkedin.com')),
+		testOf('Twitter', 'Can you contact Twitter.com at all?', pingTest('https://twitter.com')),
+		margin(),
 
-	// Test sites in our data centre
-	testOf('DCGA1', 'Can you reach our primary data centre?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
-	testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://shop.inventid.nl/assets/logo_without_name-5237986b43fe8729877c205ea88fe0f1043c0b69ea03383cde12c86f664afd43.png')),
-];
+		// Or parts of our Google platform
+		testOf('Google SE', 'Can you contact google.com?', performNetworkRequest('https://www.google.com/', 'no-cors')),
+		testOf('Google Docs', 'Can you contact Google Docs?', performNetworkRequest('https://docs.google.com/forms/d/e/1FAIpQLSf-UqflUetJ64U_h1K8eGjePLArMeBknoaH_tkOZPqq9dizLg/viewform', 'no-cors')),
+		margin(),
+
+		// More internal test of social networks
+		testOf('Facebook CSS', 'Can you reach Facebook Network?', performNetworkRequest('https://facebook.com/security/hsts-pixel.gif')),
+		testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
+		margin(),
+
+		// Test sites in our data centre
+		testOf('DCGA1', 'Can you reach our primary data centre?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
+		testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://shop.inventid.nl/assets/logo_without_name-5237986b43fe8729877c205ea88fe0f1043c0b69ea03383cde12c86f664afd43.png')),
+	]
+;
 
 export default tests;
