@@ -1,7 +1,7 @@
-import 'core-js/es6/set';
-import 'core-js/es6/map';
-import 'core-js/fn/set';
-import 'core-js/fn/map';
+import 'core-js/features/set';
+import 'core-js/features/map';
+import 'core-js/es/set';
+import 'core-js/es/map';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
