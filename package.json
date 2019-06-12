@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "core-js": "^2.5.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "core-js": "^3.1.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
     "react-device": "^0.8.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
     "web-pingjs": "https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871"
   },
   "scripts": {
@@ -17,5 +17,17 @@
     "build:ci": "yarn install && yarn build && rm -Rf node_modules && echo 'node_modules removed' && chmod -Rf 0777 build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
