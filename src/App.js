@@ -29,10 +29,11 @@ class App extends PureComponent {
 
 				{Line}
 
-				<p className="App-explanation">
-					After taking note of the displayed test results, please inform your account manager or supporter of the
-					results below.
+				<p className="App-explanation focus">
+					Please send a screenshot of the entire page to your account manager or supporter.
 				</p>
+
+				{Line}
 
 				<TestItemList tests={tests}/>
 
@@ -50,8 +51,8 @@ class App extends PureComponent {
 				{Line}
 
 				<p>
-					The following information will tell our engineers more about the system you are using.
-					Please copy/paste the text below in your email to your account manager or supporter.
+					The following information will tell our engineers more about the system you are using. No personal
+					information is collected.
 				</p>
 
 				<Environment/>
