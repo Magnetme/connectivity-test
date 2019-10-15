@@ -131,7 +131,7 @@ const tests = [
 		margin(),
 
 		testOf('Ping', 'Can you contact Magnet.me at all (domain)?', pingTest('http://magnet.me')),
-		testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://lb.magnet.me')),
+		testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://loadbalancer.magnet.me')),
 		testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
 		testOf('Ping OAuth', 'Can you contact our authentication layer?', performNetworkRequest('https://oauth.magnet.me', 'no-cors')),
 		// No pings for Oauth, since it adoes not allow remote checks for security reasons
