@@ -166,7 +166,7 @@ const tests = [
 		// testOf('Proxy image', 'Can you reach our proxy imaging subsystem?', loadAsIframe(`https://camo.magnet.me/status`)),
 		// margin(),
 
-		testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/markdown/autolinker`)),
+		testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/healthcheck`)),
 		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
 		// margin(),
 
