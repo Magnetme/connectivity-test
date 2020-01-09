@@ -133,20 +133,21 @@ const tests = [
 		testOf('Ping', 'Can you contact Magnet.me at all (domain)?', pingTest('http://magnet.me')),
 		testOf('Ping LB', 'Can you contact our datacenter?', pingTest('http://loadbalancer.magnet.me')),
 		testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
+		testOf('Ping CDN2', 'Can you contact our alternate CDN?', pingTest('http://cdn2.magnet.me')),
 		testOf('Ping OAuth', 'Can you contact our authentication layer?', performNetworkRequest('https://oauth.magnet.me', 'no-cors')),
 		// No pings for Oauth, since it adoes not allow remote checks for security reasons
 		margin(),
 
-		testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://149.210.175.129', 'no-cors')),
+		testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://136.144.129.63', 'no-cors')),
 		margin(),
 
-		testOf('IPv4 Ping', 'Can you contact Magnet.me at all over IPv4?', pingTest('http://149.210.175.129')),
+		testOf('IPv4 Ping', 'Can you contact Magnet.me at all over IPv4?', pingTest('http://136.144.129.63')),
 		testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
 		testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
 		margin(),
 
 		// These are allowed to fail if the client network does not support ipv6
-		testOf('IPv6 Ping', 'Can you contact Magnet.me at all over IPv6?', pingTest('http://2a01:7c8:aab5:69::1')),
+		testOf('IPv6 Ping', 'Can you contact Magnet.me at all over IPv6?', pingTest('http://2a01:7c8:fff9:e8::1')),
 		testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
 		testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
 		margin(),
