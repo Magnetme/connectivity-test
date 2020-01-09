@@ -198,7 +198,7 @@ const tests = [
 
 		// Test sites in our data centre
 		testOf('DCGA1', 'Can you reach our primary data centre?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
-		testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://shop.inventid.nl/assets/logo_without_name-5237986b43fe8729877c205ea88fe0f1043c0b69ea03383cde12c86f664afd43.png')),
+		testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://team.blue/img/cms/index/brands6.png')),
 	]
 ;
 
