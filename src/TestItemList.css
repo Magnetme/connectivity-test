@@ -4,7 +4,7 @@
 
 .fail {
 	color: red;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .inProgress {
