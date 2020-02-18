@@ -71,6 +71,22 @@ async function checkHttp2() {
 	}
 }
 
+async function checkTlsProtocol() {
+	const result = await performNetworkRequest(`https://clients.magnet.me/ssl_protocol`)();
+	try {
+		const text = await result.response.text();
+		return {
+			success : text === 'TLSv1.3',
+			response : text,
+		}
+	} catch (e) {
+		return {
+			success : false,
+			response : e,
+		}
+	}
+}
+
 function websockets(secure = false) {
 	const message = `Magnet.me websocket test ${Math.random()}`;
 	return async () => new Promise(((resolve, reject) => {
@@ -177,6 +193,7 @@ const tests = [
 		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
 		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
 		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
+		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
 		testOf('Intercom', 'Can you reach Intercom?', loadAsScript('https://widget.intercom.io/widget/jvjwxo89')),
 		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/scriptloader/6834098.js')),
 		testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
