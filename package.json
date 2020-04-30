@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "prop-types": "^15.7.2",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-device": "^0.8.1",
-    "react-dom": "^16.13.0",
-    "react-scripts": "^3.4.0",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
     "web-pingjs": "https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871"
   },
   "scripts": {
