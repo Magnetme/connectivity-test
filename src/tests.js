@@ -183,10 +183,10 @@ const tests = [
 		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
 		testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`, 'no-cors')),
 		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
-		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
+		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://magnet.me/fonts/css?family=Source+Sans+Pro:300,400,400i,600,700&display=swap&subset=latin`)),
 		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
 		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
-		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/scriptloader/6834098.js')),
+		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/hsstatic/cos-i18n/static-1.16/bundles/project.js')),
 		testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
 		margin(),
 
