@@ -2,11 +2,13 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import './TestItemList.css';
 
-const itemPropType = {
-	name : PropTypes.string.isRequired,
-	description : PropTypes.string.isRequired,
-	test : PropTypes.func.isRequired,
-};
+const itemPropType = PropTypes.oneOfType([
+	PropTypes.shape({}),
+	PropTypes.shape({
+		name : PropTypes.string.isRequired,
+		description : PropTypes.string.isRequired,
+		test : PropTypes.func.isRequired,
+	})]);
 const marginStyle = {
 	height : 6,
 	borderTop : '1px solid #DBDBDB',
@@ -62,7 +64,7 @@ class TestItemRow extends PureComponent {
 	render() {
 		if (this.isMarginOnly()) {
 			return <tr style={marginStyle}>
-				<td colspan="3" style={marginStyle}>{` `}</td>
+				<td colSpan="3" style={marginStyle}>{` `}</td>
 			</tr>
 		}
 
@@ -85,7 +87,7 @@ class TestItemList extends PureComponent {
 	}
 
 	static propTypes = {
-		tests : PropTypes.arrayOf(PropTypes.shape(itemPropType)),
+		tests : PropTypes.arrayOf(itemPropType),
 	};
 
 	componentDidMount() {

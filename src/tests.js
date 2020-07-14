@@ -179,22 +179,13 @@ const tests = [
 		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
 		margin(),
 
-		// TODO the test below is not working
-		// testOf('Proxy image', 'Can you reach our proxy imaging subsystem?', loadAsIframe(`https://camo.magnet.me/status`)),
-		// margin(),
-
 		testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/healthcheck`)),
 		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
-		// margin(),
-
-		// TODO the test below is not working
-		// testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`)),
-
+		testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`, 'no-cors')),
 		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
 		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://cdn.magnet.me/fonts/source_sans_pro/source_sans_pro_v3.css`)),
 		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
 		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
-		testOf('Intercom', 'Can you reach Intercom?', loadAsScript('https://widget.intercom.io/widget/jvjwxo89')),
 		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/scriptloader/6834098.js')),
 		testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
 		margin(),
@@ -212,7 +203,7 @@ const tests = [
 
 		// More internal test of social networks
 		testOf('Facebook CSS', 'Can you reach Facebook Network?', performNetworkRequest('https://facebook.com/security/hsts-pixel.gif')),
-		testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/js/analytics.js')),
+		testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/litms/utag/voyager-web-feed/utag.js')),
 		margin(),
 
 		// Test sites in our data centre
