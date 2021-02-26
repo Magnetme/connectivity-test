@@ -1,3 +1,5 @@
+[![Magnet.me Logo](https://cdn.magnet.me/images/logo-2015-full.svg)](https://magnet.me "Discover the best companies, jobs and internships at Magnet.me")
+
 # Connectivity test
 
 Accessible under multiple URLs:
