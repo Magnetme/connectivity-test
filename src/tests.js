@@ -203,9 +203,9 @@ const tests = [
 		testOf('LinkedIn JS', 'Can you reach LinkedIn JS?', loadAsScript('https://platform.linkedin.com/litms/utag/voyager-web-feed/utag.js')),
 		margin(),
 
-		// Test sites in our data centre
-		testOf('DCGA1', 'Can you reach our primary data centre?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
-		testOf('DCGA2', 'Can you reach our secondary data centre?', loadAsImage('https://team.blue/img/cms/index/brands6.png')),
+		// Test sites in our data center
+		testOf('DCGA1', 'Can you reach our primary data center?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
+		testOf('DCGA2', 'Can you reach our secondary data center?', loadAsImage('https://team.blue/img/cms/index/brands6.png')),
 	]
 ;
 
