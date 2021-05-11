@@ -151,7 +151,7 @@ const tests = [
 		testOf('Ping CDN', 'Can you contact our CDN?', pingTest('http://cdn.magnet.me')),
 		testOf('Ping CDN2', 'Can you contact our alternate CDN?', pingTest('http://cdn2.magnet.me')),
 		testOf('Ping OAuth', 'Can you contact our authentication layer?', performNetworkRequest('https://oauth.magnet.me', 'no-cors')),
-		// No pings for Oauth, since it adoes not allow remote checks for security reasons
+		// No pings for Oauth, since it does not allow remote checks for security reasons
 		margin(),
 
 		testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://136.144.129.63', 'no-cors')),
