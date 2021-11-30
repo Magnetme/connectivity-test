@@ -122,7 +122,7 @@ const tests = [
 		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
 		margin(),
 
-		testOf('Web', 'Can you reach our web servers?', loadAsScript(`https://magnet.me/healthcheck`)),
+		testOf('Web', 'Can you reach our web servers?', performNetworkRequest(`https://magnet.me/healthcheck`, 'no-cors')),
 		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
 		testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`, 'no-cors')),
 		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
@@ -130,7 +130,6 @@ const tests = [
 		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
 		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
 		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/hsstatic/cos-i18n/static-1.16/bundles/project.js')),
-		testOf('Tentamenrooster', 'Can you reach Tentamenrooster.nl?', loadAsScript('https://tentamenrooster.nl')),
 		margin(),
 
 		// This checks whether Social stuff might be blocked
