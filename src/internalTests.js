@@ -45,13 +45,14 @@ function websockets(secure = false) {
 		}, 5000);
 
 		try {
-			const websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.org/`);
+			const websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.events/`);
 			let start;
 			websocket.onopen = () => {
 				start = new Date();
 				websocket.send(message);
 			};
 
+			let messageCounter = 0;
 			websocket.onmessage = (evt) => {
 				const responseData = evt.data;
 				if (responseData === message) {
@@ -60,6 +61,10 @@ function websockets(secure = false) {
 						success : true,
 						response : new Date() - start,
 					});
+					console.log(`Resolved at messageCounter: ${messageCounter}`);
+				} else if (messageCounter <= 2) {
+					// We expect the message coming back in the first two messages
+					messageCounter++;
 				} else {
 					console.log(`Response data was '${responseData}', expected '${message}'.`);
 					failed();
