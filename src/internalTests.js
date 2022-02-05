@@ -123,7 +123,7 @@ const tests = [
 		testOf('Secure websockets', 'Can you communicate over secure websockets?', websockets(true)),
 		margin(),
 
-		testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://customerimages.magnet.me/_health`)),
+		testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://home.magnetme-images.com/hire.gif`)),
 		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
 		margin(),
 
