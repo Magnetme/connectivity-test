@@ -28,8 +28,8 @@ class Environment extends PureComponent {
 	}
 
 	async componentDidMount() {
-		fetch('http://api.ipstack.com/check?hostname=1&access_key=c7de533b6bb95365e6f4efc3779e17de')
-			.then(response => response.json())
+		fetch('https://clients.magnet.me/ip')
+			.then(response => response.text())
 			.then(ip => this.setState({ip}));
 
 		fetch('https://clients.magnet.me/user_agent')
