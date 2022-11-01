@@ -127,10 +127,10 @@ const tests = [
 		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
 		margin(),
 
-		testOf('Web', 'Can you reach our web servers?', performNetworkRequest(`https://magnet.me/healthcheck`, 'no-cors')),
-		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/healthcheck`)),
+		testOf('Web', 'Can you reach our web servers?', performNetworkRequest(`https://magnet.me/_health`, 'no-cors')),
+		testOf('API', 'Can you reach our APIs?', performNetworkRequest(`https://api.magnet.me/_health`)),
 		testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`, 'no-cors')),
-		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-bigger.png`)),
+		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-2015-icon_2x.png`)),
 		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://magnet.me/fonts/css?family=Source+Sans+Pro:300,400,400i,600,700&display=swap&subset=latin`)),
 		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
 		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
