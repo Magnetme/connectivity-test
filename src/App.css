@@ -1,8 +1,17 @@
 .App {
 	text-align: left;
-	max-width: 640px;
-	margin: 20px;
+	max-width: 100%;
+	margin: 27px;
 	font-family: 'Source Sans Pro', sans-serif;
+}
+
+@media only screen and (min-width: 800px) {
+	.App {
+		text-align: left;
+		max-width: 800px;
+		margin: 27px auto;
+		font-family: 'Source Sans Pro', sans-serif;
+	}
 }
 
 .line {
@@ -15,7 +24,7 @@
 }
 
 .focus {
-	color: rgb(0,0,0);
+	color: rgb(0, 0, 0);
 	font-weight: 600;
 }
 
