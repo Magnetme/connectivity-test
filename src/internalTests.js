@@ -91,8 +91,12 @@ function testOf(name, description, test) {
 }
 
 function margin() {
-	return {};
+	return {
+		isMargin: true
+	};
 }
+
+const isClientUsingHttps = window.location.protocol === 'https:';
 
 const tests = [
 		margin(),
@@ -105,20 +109,23 @@ const tests = [
 		// No pings for Oauth, since it does not allow remote checks for security reasons
 		margin(),
 
-		testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://136.144.129.63', 'no-cors')),
-		margin(),
+		isClientUsingHttps ? undefined :
+		[
+			testOf('IPv4 - no DNS', 'Does connecting over ipv4 without DNS work?', performNetworkRequest('http://136.144.129.63', 'no-cors')),
+			margin(),
+		],
 
-		testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
+		isClientUsingHttps ? undefined : testOf('IPv4 / HTTP', 'Does connecting over ipv4 work?', performNetworkRequest('http://clients-4.magnet.me')),
 		testOf('IPv4 / HTTPS', 'Does connecting over ipv4 with HTTPS work?', performNetworkRequest('https://clients-4.magnet.me')),
 		margin(),
 
 		// These are allowed to fail if the client network does not support ipv6
-		testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
+		isClientUsingHttps ? undefined :testOf('IPv6 / HTTP', 'Does connecting over ipv6 work? *', performNetworkRequest('http://clients-6.magnet.me')),
 		testOf('IPv6 / HTTPS', 'Does connecting over ipv6 with HTTPS work? *', performNetworkRequest('https://clients-6.magnet.me')),
 		margin(),
 
 		// The two tests below only work in production
-		testOf('HTTP', 'Can you communicate over HTTP?', loadAsScript(`http://${window.location.host}/demo.js`)),
+		isClientUsingHttps ? undefined :testOf('HTTP', 'Can you communicate over HTTP?', loadAsScript(`http://${window.location.host}/demo.js`)),
 		testOf('HTTPS', 'Can you communicate over HTTPS?', loadAsScript(`https://${window.location.host}/demo.js`)),
 		testOf('Secure websockets', 'Can you communicate over secure websockets?', websockets(true)),
 		margin(),
@@ -156,7 +163,7 @@ const tests = [
 		// Test sites in our data center
 		testOf('DCGA1', 'Can you reach our primary data center?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
 		testOf('DCGA2', 'Can you reach our secondary data center?', loadAsImage('https://team.blue/img/cms/index/brands6.png')),
-	]
+	].flat()
 ;
 
 export default tests;

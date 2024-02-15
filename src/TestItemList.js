@@ -31,7 +31,7 @@ class TestItemRow extends PureComponent {
 	}
 
 	async componentDidMount() {
-		if (this.isMarginOnly()) {
+		if (Object.keys(this.props).length === 0 || this.isMarginOnly()) {
 			// No need to execute tests for these
 			return;
 		}
@@ -51,7 +51,7 @@ class TestItemRow extends PureComponent {
 	}
 
 	isMarginOnly() {
-		return Object.keys(this.props).length === 0;
+		return this.props.isMargin ?? false;
 	}
 
 	_renderResult() {
@@ -62,6 +62,9 @@ class TestItemRow extends PureComponent {
 	}
 
 	render() {
+		if (Object.keys(this.props).length === 0) {
+			return null;
+		}
 		if (this.isMarginOnly()) {
 			return <tr style={marginStyle}>
 				<td colSpan="3" style={marginStyle}>{` `}</td>
