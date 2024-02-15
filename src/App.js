@@ -67,7 +67,7 @@ class App extends PureComponent {
 				{Line}
 
 				<p className="App-explanation focus">
-					Please send a screenshot of the entire page to your account manager or supporter.
+					Please send a screenshot of the entire page to your account manager or customer success manager.
 				</p>
 
 				{Line}
