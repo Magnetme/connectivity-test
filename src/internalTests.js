@@ -162,7 +162,7 @@ const tests = [
 
 		// Test sites in our data center
 		testOf('DCGA1', 'Can you reach our primary data center?', loadAsImage('https://www.transip.nl/img/_beyourself/trustpilot-v3.png')),
-		testOf('DCGA2', 'Can you reach our secondary data center?', loadAsImage('https://team.blue/img/cms/index/brands6.png')),
+		testOf('DCGA2', 'Can you reach our secondary data center?', loadAsImage('https://i.tb-content.net/cms/f63401/homepage-flag.jpg')),
 	].flat()
 ;
 
