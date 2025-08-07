@@ -55,6 +55,9 @@ class Environment extends PureComponent {
 				2250 : undefined,
 				2500 : undefined,
 				3000 : undefined,
+				3500 : undefined,
+				4000 : undefined,
+				5000 : undefined,
 			}
 		};
 		this.onChange = this.onChange.bind(this);
