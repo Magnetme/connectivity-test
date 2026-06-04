@@ -2,13 +2,17 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import './TestItemList.css';
 
+const testItemPropTypes = {
+	name : PropTypes.string.isRequired,
+	description : PropTypes.string.isRequired,
+	test : PropTypes.func.isRequired,
+};
 const itemPropType = PropTypes.oneOfType([
-	PropTypes.shape({}),
 	PropTypes.shape({
-		name : PropTypes.string.isRequired,
-		description : PropTypes.string.isRequired,
-		test : PropTypes.func.isRequired,
-	})]);
+		isMargin : PropTypes.bool.isRequired,
+	}),
+	PropTypes.shape(testItemPropTypes),
+]);
 const marginStyle = {
 	height : 6,
 	borderTop : '1px solid #DBDBDB',
@@ -20,7 +24,12 @@ const FAILED = <span className="fail">Failed</span>;
 
 class TestItemRow extends PureComponent {
 
-	static propTypes = itemPropType;
+	static propTypes = {
+		isMargin : PropTypes.bool,
+		name : PropTypes.string,
+		description : PropTypes.string,
+		test : PropTypes.func,
+	};
 
 	constructor(props) {
 		super(props);
@@ -39,15 +48,24 @@ class TestItemRow extends PureComponent {
 		// Pick a delay between 250 and 2000ms
 		// Otherwise the tests are being done too quickly and people think nothing really happened...
 		const randomDelay = (Math.floor(Math.random() * 1750) + 250);
-		const result = await new Promise(resolve => setTimeout(() => resolve(this.props.test()), randomDelay));
+		let result;
+		try {
+			await new Promise(resolve => setTimeout(resolve, randomDelay));
+			result = await this.props.test();
+		} catch (e) {
+			result = {
+				success : false,
+				response : e,
+			};
+		}
 
-		if (!result.success) {
+		if (!result || !result.success) {
 			console.warn(this.props.name, result);
 		} else {
 			console.log(this.props.name, result);
 		}
 
-		this.setState({result : result.success, isDone : true});
+		this.setState({result : result?.success === true, isDone : true});
 	}
 
 	isMarginOnly() {

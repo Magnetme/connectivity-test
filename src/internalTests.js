@@ -35,17 +35,35 @@ async function checkTlsProtocol() {
 
 function websockets(secure = false) {
 	const message = `Magnet.me websocket test ${Math.random()}`;
-	return async () => new Promise(((resolve, reject) => {
-		const failed = () => reject({
+	return async () => new Promise(((resolve) => {
+		let websocket;
+		let isFinished = false;
+		let timeout;
+
+		const finish = (result) => {
+			if (isFinished) {
+				return;
+			}
+			isFinished = true;
+			clearTimeout(timeout);
+			if (websocket && websocket.readyState === WebSocket.OPEN) {
+				websocket.close();
+			}
+			resolve(result);
+		};
+
+		const failed = (response) => finish({
 			success : false,
+			response,
 		});
-		const timeout = setTimeout(() => {
+
+		timeout = setTimeout(() => {
 			console.warn('WSS took too long');
-			failed();
+			failed('timeout');
 		}, 5000);
 
 		try {
-			const websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.events/`);
+			websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.events/`);
 			let start;
 			websocket.onopen = () => {
 				start = new Date();
@@ -56,8 +74,7 @@ function websockets(secure = false) {
 			websocket.onmessage = (evt) => {
 				const responseData = evt.data;
 				if (responseData === message) {
-					clearTimeout(timeout);
-					resolve({
+					finish({
 						success : true,
 						response : new Date() - start,
 					});
@@ -70,14 +87,12 @@ function websockets(secure = false) {
 					failed();
 				}
 			};
-			websocket.onerror = () => {
-				clearTimeout(timeout);
-				failed();
+			websocket.onerror = (e) => {
+				failed(e);
 			}
 		} catch (e) {
 			console.warn(e);
-			clearTimeout(timeout);
-			failed();
+			failed(e);
 		}
 	}));
 }
