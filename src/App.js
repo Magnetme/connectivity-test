@@ -3,7 +3,6 @@ import './App.css';
 import Header from './Header';
 import TestItemList from "./TestItemList";
 import internalTests from './internalTests';
-import dceTests from './digitalCareerEventTests';
 import Environment from "./Environment";
 
 const Line = <p className="line"/>;
@@ -20,31 +19,6 @@ function InternalTest() {
 			</p>
 		</>
 	);
-}
-
-function DigitalCareerEventTests() {
-	return (
-		<>
-			<TestItemList tests={dceTests}/>
-
-			<p>
-				<sup>*</sup>
-				The app will continue to function properly if these analytics services fail. Less data might be available though.
-				<br/>
-				<sup>**</sup>
-				These are overarching domains, and may fail without impacting the application.
-			</p>
-
-			<p className="disclaimer">
-				This application is only provided as a tool for debugging purposes. It does not in any way guarantee access to the application.
-				No rights can be derived from the data in this tool.
-			</p>
-		</>
-	);
-}
-
-function loadTests() {
-	return window.location.pathname === '/dce' ? <DigitalCareerEventTests/> : <InternalTest/>;
 }
 
 class App extends PureComponent {
@@ -72,7 +46,7 @@ class App extends PureComponent {
 
 				{Line}
 
-				{loadTests()}
+				<InternalTest/>
 
 				{Line}
 

@@ -63,7 +63,7 @@ function websockets(secure = false) {
 		}, 5000);
 
 		try {
-			websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo.websocket.events/`);
+			websocket = new WebSocket(`${secure ? 'wss' : 'ws'}://echo-websocket.fly.dev/`);
 			let start;
 			websocket.onopen = () => {
 				start = new Date();
@@ -88,6 +88,7 @@ function websockets(secure = false) {
 				}
 			};
 			websocket.onerror = (e) => {
+				debugger;
 				failed(e);
 			}
 		} catch (e) {
