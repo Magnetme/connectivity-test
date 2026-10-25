@@ -109,9 +109,9 @@ buffer. Existing HTTP and TLS pass/fail checks retain their behaviour.
 
 ## Continuous integration
 
-GitHub Actions runs linting, all Jest tests and a production build for pull
-requests and pushes to `master`. It uses the Node version in `.nvmrc` and installs
-dependencies with `yarn install --frozen-lockfile --non-interactive`.
+GitHub Actions runs linting, all Jest tests and a production build as three
+independent checks for pull requests and pushes to `master`. It uses the Node
+version in `.nvmrc` and installs dependencies with `yarn install --frozen-lockfile --non-interactive`.
 
 Run the same checks locally after installing dependencies:
 

@@ -15,7 +15,17 @@ concurrency:
 
 jobs:
   checks:
-    name: Lint, tests and build
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            command: yarn lint
+          - name: Tests
+            command: yarn test --watchAll=false --runInBand
+          - name: Build
+            command: yarn build
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
@@ -30,9 +40,5 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile --non-interactive
-      - name: Lint
-        run: yarn lint
-      - name: Test
-        run: yarn test --watchAll=false --runInBand
-      - name: Build
-        run: yarn build
+      - name: ${{ matrix.name }}
+        run: ${{ matrix.command }}
