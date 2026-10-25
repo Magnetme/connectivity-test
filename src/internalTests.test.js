@@ -1,3 +1,4 @@
+import {afterEach, beforeEach, expect, test, vi} from 'vitest';
 import tests from './internalTests';
 import {checkConnection} from './connectionTest';
 
@@ -6,13 +7,13 @@ test('the connection comparison is included in the connectivity checks', () => {
 });
 
 beforeEach(() => {
-	global.fetch = jest.fn();
-	jest.spyOn(console, 'warn').mockImplementation(() => {});
+	global.fetch = vi.fn();
+	vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {
 	delete global.fetch;
-	jest.restoreAllMocks();
+	vi.restoreAllMocks();
 });
 
 test('TLS 1.2 is listed immediately above TLS 1.3', () => {

@@ -8,16 +8,18 @@
     "react": "^17.0.2",
     "react-device": "^0.8.1",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
     "web-pingjs": "https://github.com/jdfreder/pingjs.git#c2190a3649759f2bd8569a72ae2b597b2546c871"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build:ci": "yarn install && yarn build && rm -Rf node_modules && echo 'node_modules removed' && chmod -Rf 0777 build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint": "eslint src --max-warnings=0"
+    "start": "vite",
+    "build": "vite build",
+    "build:ci": "yarn install --frozen-lockfile --non-interactive && yarn build && rm -Rf node_modules && echo 'node_modules removed' && chmod -Rf 0777 build",
+    "preview": "vite preview",
+    "lint": "eslint src vite.config.mjs eslint.config.mjs --max-warnings=0",
+    "check:dev": "yarn lint",
+    "test": "vitest run",
+    "test:dev": "yarn test",
+    "test:watch": "vitest"
   },
   "browserslist": {
     "production": [
@@ -31,16 +33,22 @@
       "last 1 safari version"
     ]
   },
-  "resolutions": {
-    "@babel/traverse": "7.23.2"
-  },
   "devDependencies": {
-    "eslint": "^7.11.0"
+    "@eslint/compat": "^2.1.1",
+    "@eslint/js": "^10.0.1",
+    "@vitejs/plugin-legacy": "^8.2.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.13.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.13.0",
+    "jsdom": "^30.1.3",
+    "terser": "^5.51.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  }
+  "engines": {
+    "node": "^24.22.1"
+  },
+  "packageManager": "yarn@1.22.22"
 }

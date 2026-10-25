@@ -116,9 +116,7 @@ class Environment extends PureComponent {
 						}
 					})
 				})
-				.catch(e => {
-					// window.alert(`URL length (${length}) violation: ${e}`);
-					debugger;
+				.catch(() => {
 					this.setState(state => {
 						const {urlLengths} = state;
 						return {

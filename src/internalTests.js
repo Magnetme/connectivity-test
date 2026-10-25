@@ -76,7 +76,6 @@ function websockets(secure = false) {
 				}
 			};
 			websocket.onerror = (e) => {
-				debugger;
 				failed(e);
 			}
 		} catch (e) {
