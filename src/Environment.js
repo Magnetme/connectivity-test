@@ -151,7 +151,7 @@ class Environment extends PureComponent {
 			<Device onChange={this.onChange}/>
 			<pre className="environment">
 			<code>
-				{JSON.stringify(this.state, null, 4)}
+				{JSON.stringify({...this.state, directConnection : this.props.directConnection}, null, 4)}
 			</code>
 		</pre>
 		</Fragment>;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import TestItemList from './TestItemList';
 
-test.each(['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3'])('%s shows only Passed or Failed while other rows retain details', async protocol => {
+test.each(['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3', 'Direct connection'])('%s shows only Passed or Failed while other rows retain details', async protocol => {
 	jest.useFakeTimers();
 	jest.spyOn(console, 'warn').mockImplementation(() => {});
 	jest.spyOn(console, 'log').mockImplementation(() => {});

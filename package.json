@@ -16,7 +16,8 @@
     "build": "react-scripts build",
     "build:ci": "yarn install && yarn build && rm -Rf node_modules && echo 'node_modules removed' && chmod -Rf 0777 build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --max-warnings=0"
   },
   "browserslist": {
     "production": [
@@ -32,5 +33,14 @@
   },
   "resolutions": {
     "@babel/traverse": "7.23.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   }
 }
