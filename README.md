@@ -106,3 +106,19 @@ request. Environment's independent metadata updates cannot overwrite it.
 Work is bounded to one request, one body read and one timing lookup per invocation,
 with no retries or polling. Lookup cost is bounded by the browser's resource timing
 buffer. Existing HTTP and TLS pass/fail checks retain their behaviour.
+
+## Continuous integration
+
+GitHub Actions runs linting, all Jest tests and a production build for pull
+requests and pushes to `master`. It uses the Node version in `.nvmrc` and installs
+dependencies with `yarn install --frozen-lockfile --non-interactive`.
+
+Run the same checks locally after installing dependencies:
+
+```sh
+yarn lint
+CI=true yarn test --watchAll=false --runInBand
+CI=true yarn build
+```
+
+Lint warnings fail the check. Jenkins continues to handle deployment.
