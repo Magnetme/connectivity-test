@@ -1,36 +1,23 @@
 import {loadAsImage, loadAsScript, loadAsStyleSheet} from "./loaders";
 import {performNetworkRequest, pingTest} from "./tests";
+import {checkHttpProtocol} from "./protocolTests";
 
-async function checkHttp2() {
-	const result = await performNetworkRequest(`https://clients.magnet.me/http_version`)();
-	try {
-		const text = await result.response.text();
-		return {
-			success : text === 'h2',
-			response : text,
+function checkTlsProtocol(minimumVersion) {
+	return async () => {
+		const result = await performNetworkRequest('https://clients.magnet.me/ssl_protocol')();
+		try {
+			if (!result.success) {
+				return {success : false, response : 'TLS request failed'};
+			}
+			const text = (await result.response.text()).trim();
+			return {
+				success : text === minimumVersion || (minimumVersion === 'TLSv1.2' && text === 'TLSv1.3'),
+				response : text,
+			};
+		} catch (e) {
+			return {success : false, response : e};
 		}
-	} catch (e) {
-		return {
-			success : false,
-			response : e,
-		}
-	}
-}
-
-async function checkTlsProtocol() {
-	const result = await performNetworkRequest(`https://clients.magnet.me/ssl_protocol`)();
-	try {
-		const text = await result.response.text();
-		return {
-			success : text === 'TLSv1.3',
-			response : text,
-		}
-	} catch (e) {
-		return {
-			success : false,
-			response : e,
-		}
-	}
+	};
 }
 
 function websockets(secure = false) {
@@ -147,7 +134,7 @@ const tests = [
 		margin(),
 
 		testOf('Image', 'Can you reach our imaging subsystem?', performNetworkRequest(`https://home.magnetme-images.com/hire.gif`)),
-		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsScript(`https://oauth.magnet.me/static/js/authentication.js`)),
+		testOf('OAuth', 'Can you reach our authentication subsystem?', loadAsStyleSheet('https://oauth.magnet.me/static/css/main.css', 'not all')),
 		margin(),
 
 		testOf('Web', 'Can you reach our web servers?', performNetworkRequest(`https://magnet.me/_health`, 'no-cors')),
@@ -155,8 +142,10 @@ const tests = [
 		testOf('Email', 'Can you reach our email servers?', performNetworkRequest(`https://email.magnet.me/_health`, 'no-cors')),
 		testOf('CDN', 'Can you reach our CDN servers?', performNetworkRequest(`https://cdn.magnet.me/images/logo-2015-icon_2x.png`)),
 		testOf('Fonts', 'Can you load our fonts?', loadAsStyleSheet(`https://magnet.me/fonts/css?family=Source+Sans+Pro:300,400,400i,600,700&display=swap&subset=latin`)),
-		testOf('HTTP2', 'Can you communicate over HTTP2?', checkHttp2),
-		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol),
+		testOf('HTTP/2', 'Does this browser negotiate HTTP/2 with Magnet.me?', checkHttpProtocol('h2')),
+		testOf('HTTP/3', 'Does this browser negotiate HTTP/3 with Magnet.me?', checkHttpProtocol('h3')),
+		testOf('TLSv1.2', 'Can you communicate using TLSv1.2 or newer?', checkTlsProtocol('TLSv1.2')),
+		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol('TLSv1.3')),
 		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/hsstatic/cos-i18n/static-1.16/bundles/project.js')),
 		margin(),
 

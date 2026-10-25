@@ -3,7 +3,6 @@ function loadAsElement(type, parent, options) {
 	return async () => {
 		const element = window.document.createElement(type);
 		options(element);
-		parent.appendChild(element);
 		try {
 			await new Promise((resolve, reject) => {
 					const timeout = setTimeout(() => {
@@ -22,6 +21,7 @@ function loadAsElement(type, parent, options) {
 						clearTimeout(timeout);
 						reject()
 					}, false);
+					parent.appendChild(element);
 				}
 			);
 			return {
@@ -45,11 +45,12 @@ export function loadAsScript(uri) {
 	});
 }
 
-export function loadAsStyleSheet(uri) {
+export function loadAsStyleSheet(uri, media = 'all') {
 	return loadAsElement('link', window.document.head, (e) => {
 		e.href = uri;
 		e.type = 'text/css';
 		e.rel = 'stylesheet';
+		e.media = media;
 	});
 }
 
