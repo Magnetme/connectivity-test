@@ -29,6 +29,7 @@ class TestItemRow extends PureComponent {
 		name : PropTypes.string,
 		description : PropTypes.string,
 		test : PropTypes.func,
+		onResult : PropTypes.func,
 	};
 
 	constructor(props) {
@@ -66,6 +67,7 @@ class TestItemRow extends PureComponent {
 		}
 
 		this.setState({result : result, isDone : true});
+		this.props.onResult?.(this.props.name, result);
 	}
 
 	isMarginOnly() {
@@ -77,7 +79,7 @@ class TestItemRow extends PureComponent {
 			return IN_PROGRESS;
 		}
 		const result = this.state.result;
-		if (['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3'].includes(this.props.name)) {
+		if (['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3', 'Direct connection'].includes(this.props.name)) {
 			return result?.success === true ? PASSED : FAILED;
 		}
 		const status = result?.success === null
@@ -119,6 +121,7 @@ class TestItemList extends PureComponent {
 
 	static propTypes = {
 		tests : PropTypes.arrayOf(itemPropType),
+		onResult : PropTypes.func,
 	};
 
 	componentDidMount() {
@@ -198,7 +201,7 @@ class TestItemList extends PureComponent {
 				<td>Is any adblocker active?</td>
 				<td>{this.adBlockView()}</td>
 			</tr>
-			{this.props.tests.map((e, i) => <TestItemRow key={i} {...e} />)}
+			{this.props.tests.map((e, i) => e && <TestItemRow key={i} {...e} onResult={this.props.onResult} />)}
 			</thead>
 
 		</table>

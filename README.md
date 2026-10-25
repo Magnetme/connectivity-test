@@ -71,3 +71,38 @@ TLSv1.2 checks a minimum version: TLSv1.2 and TLSv1.3 both pass. TLSv1.3
 requires TLSv1.3. Both use `https://clients.magnet.me/ssl_protocol`.
 Browser JavaScript cannot force a TLSv1.2 handshake, so this does not separately
 prove that a TLSv1.2-only client can connect.
+
+## Direct connection check
+
+The Direct connection row shows only **Passed** or **Failed**. It passes when the
+browser and nginx observe the same recognised HTTP protocol for one request to
+`https://clients.magnet.me/connection`. A mismatch, missing timing information,
+unrecognised protocol, HTTP error, redirect, invalid response, network failure or
+timeout fails the check. Matching protocols do not rule out TLS interception.
+
+The full result appears under `directConnection` in the environment JSON at the
+bottom of the page. It includes the outcome, explanation, browser protocol and
+nginx's request ID, HTTP and TLS protocols, negotiated cipher, offered cipher and
+group lists, and session reuse. Empty offered lists are allowed because nginx
+cannot always expose them, including for resumed sessions.
+
+Each check makes one credential-free request with a random query parameter and
+caching disabled. The endpoint must send CORS and `Timing-Allow-Origin` headers,
+including for the page's alternate domains. The five-second timeout covers
+response headers and body consumption. Deploy the Puppet endpoint before the
+page; until then the row reports Failed with HTTP 404 recorded in the JSON.
+
+The endpoint must run at the public TLS terminator. A backend behind another TLS
+terminator would describe that terminator's connection instead of the visitor's.
+The comparison is diagnostic evidence, not proof of a direct connection.
+
+Each invocation holds its own request and result. Unique URLs prevent overlapping
+probes or the existing protocol tests from sharing timing entries. Out-of-order
+responses remain attached to their own rows. An abort rejects a pending fetch or
+body read; completed results cannot be updated by a late response. The row reports
+its result to App, which passes that same result to Environment without another
+request. Environment's independent metadata updates cannot overwrite it.
+
+Work is bounded to one request, one body read and one timing lookup per invocation,
+with no retries or polling. Lookup cost is bounded by the browser's resource timing
+buffer. Existing HTTP and TLS pass/fail checks retain their behaviour.

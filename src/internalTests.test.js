@@ -1,4 +1,9 @@
 import tests from './internalTests';
+import {checkConnection} from './connectionTest';
+
+test('the connection comparison is included in the connectivity checks', () => {
+	expect(tests.find(test => test?.name === 'Direct connection').test).toBe(checkConnection);
+});
 
 beforeEach(() => {
 	global.fetch = jest.fn();

@@ -1,6 +1,7 @@
 import {loadAsImage, loadAsScript, loadAsStyleSheet} from "./loaders";
 import {performNetworkRequest, pingTest} from "./tests";
 import {checkHttpProtocol} from "./protocolTests";
+import {checkConnection} from "./connectionTest";
 
 function checkTlsProtocol(minimumVersion) {
 	return async () => {
@@ -146,13 +147,14 @@ const tests = [
 		testOf('HTTP/3', 'Does this browser negotiate HTTP/3 with Magnet.me?', checkHttpProtocol('h3')),
 		testOf('TLSv1.2', 'Can you communicate using TLSv1.2 or newer?', checkTlsProtocol('TLSv1.2')),
 		testOf('TLSv1.3', 'Can you communicate using TLSv1.3?', checkTlsProtocol('TLSv1.3')),
-		testOf('Hubspot', 'Can you reach Hubspot?', loadAsScript('https://www.hubspot.com/hs/hsstatic/cos-i18n/static-1.16/bundles/project.js')),
+		testOf('Direct connection', 'Do the browser and Magnet.me observe the same HTTP protocol?', checkConnection),
 		margin(),
 
-		// This checks whether Social stuff might be blocked
-		testOf('Facebook', 'Can you contact Facebook.com at all?', pingTest('https://facebook.com')),
-		testOf('LinkedIn', 'Can you contact LinkedIn.com at all?', pingTest('https://www.linkedin.com')),
-		testOf('Twitter', 'Can you contact Twitter.com at all?', pingTest('https://twitter.com')),
+		// Check whether third-party services might be blocked
+		testOf('Facebook', 'Can you reach Facebook?', pingTest('https://facebook.com')),
+		testOf('HubSpot', 'Can you reach HubSpot?', loadAsScript('https://www.hubspot.com/hs/hsstatic/cos-i18n/static-1.16/bundles/project.js')),
+		testOf('LinkedIn', 'Can you reach LinkedIn?', pingTest('https://www.linkedin.com')),
+		testOf('Twitter', 'Can you reach Twitter?', pingTest('https://twitter.com')),
 		margin(),
 
 		// Or parts of our Google platform

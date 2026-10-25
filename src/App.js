@@ -7,10 +7,10 @@ import Environment from "./Environment";
 
 const Line = <p className="line"/>;
 
-function InternalTest() {
+function InternalTest({onResult}) {
 	return (
 		<>
-			<TestItemList tests={internalTests}/>
+			<TestItemList tests={internalTests} onResult={onResult}/>
 
 			<p>
 				<sup>*</sup>
@@ -22,6 +22,18 @@ function InternalTest() {
 }
 
 class App extends PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {directConnection : null};
+		this.onTestResult = this.onTestResult.bind(this);
+	}
+
+	onTestResult(name, result) {
+		if (name === 'Direct connection') {
+			this.setState({directConnection : result});
+		}
+	}
 
 	render() {
 		return (
@@ -46,7 +58,7 @@ class App extends PureComponent {
 
 				{Line}
 
-				<InternalTest/>
+				<InternalTest onResult={this.onTestResult}/>
 
 				{Line}
 
@@ -55,7 +67,7 @@ class App extends PureComponent {
 					information is collected.
 				</p>
 
-				<Environment/>
+				<Environment directConnection={this.state.directConnection}/>
 			</div>
 		);
 	}
