@@ -65,7 +65,7 @@ class TestItemRow extends PureComponent {
 			console.log(this.props.name, result);
 		}
 
-		this.setState({result : result?.success === true, isDone : true});
+		this.setState({result : result, isDone : true});
 	}
 
 	isMarginOnly() {
@@ -76,7 +76,17 @@ class TestItemRow extends PureComponent {
 		if (!this.state.isDone) {
 			return IN_PROGRESS;
 		}
-		return this.state.result ? PASSED : FAILED;
+		const result = this.state.result;
+		if (['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3'].includes(this.props.name)) {
+			return result?.success === true ? PASSED : FAILED;
+		}
+		const status = result?.success === null
+			? <span className="inProgress">Not observed</span>
+			: result?.success === true ? PASSED : FAILED;
+		return <React.Fragment>
+			{status}
+			{typeof result?.response === 'string' && <div>{result.response}</div>}
+		</React.Fragment>;
 	}
 
 	render() {
