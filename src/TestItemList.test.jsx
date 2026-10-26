@@ -1,12 +1,13 @@
+import {expect, test, vi} from 'vitest';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import TestItemList from './TestItemList';
 
 test.each(['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3', 'Direct connection'])('%s shows only Passed or Failed while other rows retain details', async protocol => {
-	jest.useFakeTimers();
-	jest.spyOn(console, 'warn').mockImplementation(() => {});
-	jest.spyOn(console, 'log').mockImplementation(() => {});
+	vi.useFakeTimers();
+	vi.spyOn(console, 'warn').mockImplementation(() => {});
+	vi.spyOn(console, 'log').mockImplementation(() => {});
 	const container = document.createElement('div');
 	const results = [
 		{success : true, response : 'Negotiated h2'},
@@ -25,7 +26,7 @@ test.each(['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3', 'Direct connection'])('%s s
 				test : async () => result,
 			})))}/>, container);
 		});
-		await act(async () => { jest.advanceTimersByTime(2000); });
+		await act(async () => { vi.advanceTimersByTime(2000); });
 		const rows = Array.from(container.querySelectorAll('tr')).filter(row => row.textContent.startsWith('Protocol'));
 		expect(rows[0].lastChild.textContent).toBe('PassedNegotiated h2');
 		expect(rows[1].lastChild.textContent).toBe('Not observedNegotiated h2; h3 was not observed');
@@ -34,8 +35,8 @@ test.each(['HTTP/2', 'HTTP/3', 'TLSv1.2', 'TLSv1.3', 'Direct connection'])('%s s
 		expect(protocolRows.map(row => row.lastChild.textContent)).toEqual(['Passed', 'Failed', 'Failed']);
 	} finally {
 		act(() => { ReactDOM.unmountComponentAtNode(container); });
-		jest.clearAllTimers();
-		jest.useRealTimers();
-		jest.restoreAllMocks();
+		vi.clearAllTimers();
+		vi.useRealTimers();
+		vi.restoreAllMocks();
 	}
 });

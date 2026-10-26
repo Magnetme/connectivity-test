@@ -1,3 +1,4 @@
+import {afterEach, beforeEach, expect, test, vi} from 'vitest';
 import {checkConnection} from './connectionTest';
 import {randomFillSync} from 'crypto';
 
@@ -11,8 +12,8 @@ const originalCrypto = Object.getOwnPropertyDescriptor(window, 'crypto');
 
 beforeEach(() => {
 	Object.defineProperty(window, 'crypto', {configurable : true, value : {getRandomValues : randomFillSync}});
-	global.fetch = jest.fn().mockResolvedValue(reply(server));
-	getEntries = jest.fn().mockReturnValue([{nextHopProtocol : 'h2'}]);
+	global.fetch = vi.fn().mockResolvedValue(reply(server));
+	getEntries = vi.fn().mockReturnValue([{nextHopProtocol : 'h2'}]);
 	Object.defineProperty(window.performance, 'getEntriesByName', {configurable : true, value : getEntries});
 });
 
@@ -21,7 +22,7 @@ afterEach(() => {
 	else delete window.crypto;
 	delete global.fetch;
 	delete window.performance.getEntriesByName;
-	jest.useRealTimers();
+	vi.useRealTimers();
 });
 
 test.each([
@@ -94,7 +95,7 @@ test('network errors are reported as failed checks', async () => {
 });
 
 test.each(['headers', 'body'])('timeout bounds waiting for response %s and clears its timer', async phase => {
-	jest.useFakeTimers();
+	vi.useFakeTimers();
 	fetch.mockImplementation((url, {signal}) => {
 		const stalled = () => new Promise((resolve, reject) => {
 			signal.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
@@ -103,7 +104,7 @@ test.each(['headers', 'body'])('timeout bounds waiting for response %s and clear
 	});
 	const result = checkConnection();
 	await Promise.resolve();
-	jest.advanceTimersByTime(5000);
+	vi.advanceTimersByTime(5000);
 	await expect(result).resolves.toMatchObject({success : false, response : 'Connection check timed out'});
-	expect(jest.getTimerCount()).toBe(0);
+	expect(vi.getTimerCount()).toBe(0);
 });

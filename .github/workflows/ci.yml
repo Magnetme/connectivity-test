@@ -23,7 +23,7 @@ jobs:
           - name: Lint
             command: yarn lint
           - name: Tests
-            command: yarn test --watchAll=false --runInBand
+            command: yarn test
           - name: Build
             command: yarn build
     runs-on: ubuntu-24.04

@@ -109,7 +109,7 @@ buffer. Existing HTTP and TLS pass/fail checks retain their behaviour.
 
 ## Continuous integration
 
-GitHub Actions runs linting, all Jest tests and a production build as three
+GitHub Actions runs linting, all Vitest tests and a production build as three
 independent checks for pull requests and pushes to `master`. It uses the Node
 version in `.nvmrc` and installs dependencies with `yarn install --frozen-lockfile --non-interactive`.
 
@@ -117,8 +117,20 @@ Run the same checks locally after installing dependencies:
 
 ```sh
 yarn lint
-CI=true yarn test --watchAll=false --runInBand
+yarn test
 CI=true yarn build
 ```
 
 Lint warnings fail the check. Jenkins continues to handle deployment.
+
+## Development and build
+
+Use Node 24.22.1, pinned in `.nvmrc` and the Jenkins deployment image, with Yarn
+1.22.22. GitHub Actions reads `.nvmrc` for all three checks.
+
+Run `yarn start` for the Vite development server and `yarn test:watch` for Vitest
+watch mode. `yarn build` writes the production site to `build/`; `yarn preview`
+serves that build locally. Public diagnostic scripts retain their existing URLs.
+
+Vite's legacy-browser plugin uses the existing production browser targets. The
+build no longer needs React Scripts, Webpack or an OpenSSL compatibility flag.
